@@ -20,9 +20,8 @@ function showPage (list, page){
    let startIndex = (page * perPage) - perPage;
    let endIndex = (page * perPage);
 
-   let studentList = document.getElementsByClassName('student-list');
-   let contents = studentList.innerHTML;
-   contents = '';
+   let studentList = document.getElementsByClassName('student-list')[0];
+   let contents = '';
 
    for (let i=0; i<list.length;i++){
       let listSelected = list[i]
@@ -30,7 +29,7 @@ function showPage (list, page){
          contents += `
          <li class="student-item cf">
             <div class="student-details">
-               <img class="avatar" ${data[i].picture.large} alt="Profile Picture">
+               <img class="avatar" src=${data[i].picture.large} alt="Profile Picture">
                <h3>${data[i].name.first} ${data[i].name.last}</h3>
                <span class="email">${data[i].email}</span>
             </div>
@@ -41,9 +40,8 @@ function showPage (list, page){
       `
       }
    }
-
+studentList.innerHTML = contents;
 }
-
 
 /*
 Create the `addPagination` function
@@ -54,37 +52,26 @@ function addPagination(list){
    let numOfPages = Math.ceil(list.length / perPage);
    const linkList = document.querySelector('.link-list');
    linkList.innerHTML = '';
-
    for (let i = 1; i < numOfPages; i++){
-      let button = document.createElement(li);
-      button.innerHTML = `
+      const li = document.createElement('li');
+      li.innerHTML = `
       <li>
          <button type = "button">${i}</button>
       </li>
       `;
-      linkList.appendChild(button);
+      linkList.insertAdjacentHTML("beforeend", li.innerHTML);
   }
-
-   button.insertAdjacentHTML("beforeend",linkList);
-
-   const button1 = document.querySelector('button')
-   button1.className = "active";
-
+   const buttons = document.querySelectorAll('button')
+   buttons[0].className = "active";
 
   
-  // create an event listener on the `link-list` element
-    // if the click target is a button:
-      // remove the "active" class from the previous button
-      // add the active class to the clicked button
-      // call the showPage function passing the `list` parameter and page to display as arguments
-   linkList.addEventListener("click", (e) => { 
-      if (button.className === "active") {
-         button.className = "";
-      }else {
-         button.className = "active";
-      }
-
-
+   linkList.addEventListener("click", (e) => {
+         if (e.target.tagName === "BUTTON"){
+            const active = document.querySelector(".active");
+            active.className = "";
+            e.target.className = "active";
+            showPage(list,e.target.textContent);
+   }
 })
 
    
