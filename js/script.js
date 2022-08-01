@@ -3,34 +3,35 @@ Treehouse Techdegree:
 FSJS Project 2 - Data Pagination and Filtering
 */
 
+const perPage = 9; //establishing number of students on the page
+
+
 
 
 /*
-For assistance:
-   Check out the "Project Resources" section of the Instructions tab: https://teamtreehouse.com/projects/data-pagination-and-filtering#instructions
-   Reach out in your Slack community: https://treehouse-fsjs-102.slack.com/app_redirect?channel=unit-2
-*/
-
-/*
-Create the `showPage` function
+Creating the `showPage` function
 This function will create and insert/append the elements needed to display a "page" of nine students
 */
-const perPage = 9;
 function showPage (list, page){
-   let startIndex = (page * perPage) - perPage;
+
+   // Establishing the start and end index for which students will be displayed on the page
+   let startIndex = (page * perPage) - perPage; 
    let endIndex = (page * perPage);
 
-   let studentList = document.getElementsByClassName('student-list');
-   let contents = studentList.innerHTML;
-   contents = '';
 
+   // Interacting with the DOM by selecting the class name 'student-list'. 
+   // This gives us an HTMLCollection. We select the first one out of the collection
+   let studentList = document.getElementsByClassName('student-list')[0];
+   let contents = ''; // Creating an empty string
+
+   //Looping through the list. Here we set a template literal and iterate it into the empty string variable 'contents'
    for (let i=0; i<list.length;i++){
       let listSelected = list[i]
       if (i >= startIndex && i < endIndex){
          contents += `
          <li class="student-item cf">
             <div class="student-details">
-               <img class="avatar" ${data[i].picture.large} alt="Profile Picture">
+               <img class="avatar" src=${data[i].picture.large} alt="Profile Picture">
                <h3>${data[i].name.first} ${data[i].name.last}</h3>
                <span class="email">${data[i].email}</span>
             </div>
@@ -41,53 +42,51 @@ function showPage (list, page){
       `
       }
    }
-
+   studentList.innerHTML = contents; //Setting the HTML content to the output variable 'content'
 }
 
-
 /*
-Create the `addPagination` function
+Creating the `addPagination` function
 This function will create and insert/append the elements needed for the pagination buttons
 */
-
 function addPagination(list){
-   let numOfPages = Math.ceil(list.length / perPage);
-   const linkList = document.querySelector('.link-list');
-   linkList.innerHTML = '';
+   let numOfPages = Math.ceil(list.length / perPage); //equation to set the number of pagination will be on the page
+   const linkList = document.querySelector('.link-list'); //Selecting the class 'link-list'
+   linkList.innerHTML = ''; //Setting the html content to an empty string
 
+/*
+Creating a loop that loops over the numOfPages. Also we create a new element 'li' and 
+set the HTML content to a template literal. After that we then inserts the element 
+node 'li.innerHTML' at the position inside the target element, after its last child.
+*/ 
    for (let i = 1; i < numOfPages; i++){
-      let button = document.createElement(li);
-      button.innerHTML = `
+      const li = document.createElement('li'); 
+      li.innerHTML = `
       <li>
          <button type = "button">${i}</button>
       </li>
       `;
-      linkList.appendChild(button);
+      linkList.insertAdjacentHTML("beforeend", li.innerHTML);
   }
-
-   button.insertAdjacentHTML("beforeend",linkList);
-
-   const button1 = document.querySelector('button')
-   button1.className = "active";
-
+   const buttons = document.querySelectorAll('button') 
+   buttons[0].className = "active"; //Setting out first button HTML Collection to active
 
   
-  // create an event listener on the `link-list` element
-    // if the click target is a button:
-      // remove the "active" class from the previous button
-      // add the active class to the clicked button
-      // call the showPage function passing the `list` parameter and page to display as arguments
-   linkList.addEventListener("click", (e) => { 
-      if (button.className === "active") {
-         button.className = "";
-      }else {
-         button.className = "active";
-      }
-
-
-})
-
-   
-   }
+/*
+Creating an event listener on linkList. This event will list for a click by the user.
+We set a conditional where, if the page number is clicked, that number page will be added 
+the class 'active' and the button that had the 'active class will be then removed. 
+*/ 
+   linkList.addEventListener("click", (e) => {
+         if (e.target.tagName === "BUTTON"){
+            const active = document.querySelector(".active");
+            active.className = "";
+            e.target.className = "active";
+            showPage(list,e.target.textContent);
+      }  
+   })
+}
 
 // Call functions
+showPage(data,1);
+addPagination(data);
