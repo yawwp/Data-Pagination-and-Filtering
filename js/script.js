@@ -45,6 +45,7 @@ function showPage (list, page){
    studentList.innerHTML = contents; //Setting the HTML content to the output variable 'content'
 }
 
+
 /*
 Creating the `addPagination` function
 This function will create and insert/append the elements needed for the pagination buttons
