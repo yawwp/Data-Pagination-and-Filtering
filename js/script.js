@@ -89,5 +89,6 @@ the class 'active' and the button that had the 'active class will be then remove
 }
 
 // Call functions
+
 showPage(data,1);
 addPagination(data);
