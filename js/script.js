@@ -3,11 +3,10 @@ Treehouse Techdegree:
 FSJS Project 2 - Data Pagination and Filtering
 */
 
-const perPage = 9; //establishing number of students on the page
 
-
-
-
+ 
+   
+   const perPage = 9;
 /*
 Creating the `showPage` function
 This function will create and insert/append the elements needed to display a "page" of nine students
@@ -18,6 +17,7 @@ function showPage (list, page){
    let startIndex = (page * perPage) - perPage; 
    let endIndex = (page * perPage);
 
+   console.log(startIndex,endIndex);
 
    // Interacting with the DOM by selecting the class name 'student-list'. 
    // This gives us an HTMLCollection. We select the first one out of the collection
@@ -60,7 +60,7 @@ Creating a loop that loops over the numOfPages. Also we create a new element 'li
 set the HTML content to a template literal. After that we then inserts the element 
 node 'li.innerHTML' at the position inside the target element, after its last child.
 */ 
-   for (let i = 1; i < numOfPages; i++){
+   for (let i = 1; i < numOfPages+1; i++){
       const li = document.createElement('li'); 
       li.innerHTML = `
       <li>
