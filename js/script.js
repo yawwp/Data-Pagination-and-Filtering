@@ -6,7 +6,7 @@ FSJS Project 2 - Data Pagination and Filtering
 
  
    
-   const perPage = 9;
+const perPage = 9;
 /*
 Creating the `showPage` function
 This function will create and insert/append the elements needed to display a "page" of nine students
@@ -16,8 +16,6 @@ function showPage (list, page){
    // Establishing the start and end index for which students will be displayed on the page
    let startIndex = (page * perPage) - perPage; 
    let endIndex = (page * perPage);
-
-   console.log(startIndex,endIndex);
 
    // Interacting with the DOM by selecting the class name 'student-list'. 
    // This gives us an HTMLCollection. We select the first one out of the collection
